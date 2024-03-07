@@ -9,21 +9,29 @@ let package = Package(
         .macOS(.v14),
         .iOS(.v17),
         .tvOS(.v17),
-        .watchOS(.v10)
+        .watchOS(.v10),
+        .visionOS(.v1),
+        .macCatalyst(.v17)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "CompoundPredicate",
-            targets: ["CompoundPredicate"]),
+            targets: ["CompoundPredicate"]
+        ),
     ],
-    dependencies: [.package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.15.3")],
+    dependencies: [
+        .package(url: "https://github.com/noahkamara/swift-xctesting", branch: "main"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0")
+    ],
     targets: [
         .target(
             name: "CompoundPredicate"),
         .testTarget(
             name: "CompoundPredicateTests",
-            dependencies: ["CompoundPredicate", .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing")],
+            dependencies: [
+                "CompoundPredicate",
+                .product(name: "XCTesting", package: "swift-xctesting")
+            ],
             linkerSettings: [
                 .unsafeFlags([
                     "-Xlinker", "-sectcreate",

@@ -1,524 +1,161 @@
 import XCTest
 import InlineSnapshotTesting
+import XCTesting
 
-final class ReplaceVariableTests: XCTestCase {
-    func testComparison() throws {
+@XCTesting
+@Suite
+struct ReplaceVariableTests {
+    @Test
+    func comparison() throws {
         let predicate = #Predicate<Person> { $0.age < $0.age }
 
+        let oldVariable = try #require(try predicate.variableID())
+
         let compoundPred = [.true, predicate].conjunction()
+        
+        let variables = try #require(try compoundPred.recursiveVariables())
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  [
-                    {
-                      "identifier" : "Person.age",
-                      "root" : {
-                        "key" : 2
-                      }
-                    },
-                    {
-                      "identifier" : "Person.age",
-                      "root" : {
-                        "key" : 2
-                      }
-                    },
-                    {
-                      "lessThan" : {
+        #expect(!variables.contains(oldVariable))
 
-                      }
-                    }
-                  ]
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Int"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        },
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Int"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        }
-                      ],
-                      "identifier" : "PredicateExpressions.Comparison"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 2
-                  }
-                ]
-              }
-            ]
-            """
-        }
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        try compoundPred.testFetch()
     }
 
-    func testEqual() throws {
+    @Test
+    func equal() throws {
         let predicate = #Predicate<Person> { $0.age == $0.age }
 
         let compoundPred = [.true, predicate].conjunction()
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  [
-                    {
-                      "identifier" : "Person.age",
-                      "root" : {
-                        "key" : 5
-                      }
-                    },
-                    {
-                      "identifier" : "Person.age",
-                      "root" : {
-                        "key" : 5
-                      }
-                    }
-                  ]
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Int"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        },
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Int"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        }
-                      ],
-                      "identifier" : "PredicateExpressions.Equal"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 5
-                  }
-                ]
-              }
-            ]
-            """
-        }
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        try compoundPred.testFetch()
     }
 
-    func testNotEqual() throws {
+    @Test
+    func notEqual() throws {
         let predicate = #Predicate<Person> { $0.age != $0.age }
 
         let compoundPred = [.true, predicate].conjunction()
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  [
-                    {
-                      "identifier" : "Person.age",
-                      "root" : {
-                        "key" : 11
-                      }
-                    },
-                    {
-                      "identifier" : "Person.age",
-                      "root" : {
-                        "key" : 11
-                      }
-                    }
-                  ]
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Int"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        },
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Int"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        }
-                      ],
-                      "identifier" : "PredicateExpressions.NotEqual"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 11
-                  }
-                ]
-              }
-            ]
-            """
-        }
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        try compoundPred.testFetch()
     }
-    
-    func testVariable() throws {
+
+    @Test
+    func variable() throws {
         let predicate = #Predicate<Person> { $0.isStarred }
 
         let compoundPred = [.true, predicate].conjunction()
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  {
-                    "identifier" : "Person.isStarred",
-                    "root" : {
-                      "key" : 20
-                    }
-                  }
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            "Foundation.Predicate.Input.0"
-                          ],
-                          "identifier" : "PredicateExpressions.Variable"
-                        },
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.KeyPath"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 20
-                  }
-                ]
-              }
-            ]
-            """
-        }
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        try compoundPred.testFetch()
     }
 
-    func testNegation() throws {
+    @Test
+    func negation() throws {
         let predicate = #Predicate<Person> { !$0.isStarred }
 
         let compoundPred = [.true, predicate].conjunction()
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  {
-                    "identifier" : "Person.isStarred",
-                    "root" : {
-                      "key" : 8
-                    }
-                  }
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.Bool"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        }
-                      ],
-                      "identifier" : "PredicateExpressions.Negation"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 8
-                  }
-                ]
-              }
-            ]
-            """
-        }
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        try compoundPred.testFetch()
     }
-    
-    func testSequenceContains() throws {
+
+    @Test
+    func sequenceContains() throws {
         let predicate = #Predicate<Person> { ["John", "James"].contains($0.firstName) }
 
         let compoundPred = [.true, predicate].conjunction()
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  [
-                    [
-                      "John",
-                      "James"
-                    ],
-                    {
-                      "identifier" : "Person.firstName",
-                      "root" : {
-                        "key" : 14
-                      }
-                    }
-                  ]
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Swift.String"
-                              ],
-                              "identifier" : "Swift.Array"
-                            }
-                          ],
-                          "identifier" : "PredicateExpressions.Value"
-                        },
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.String"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        }
-                      ],
-                      "identifier" : "PredicateExpressions.SequenceContains"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 14
-                  }
-                ]
-              }
-            ]
-            """
-        }
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        try compoundPred.testFetch()
     }
 
-    func testSequenceStartsWith() throws {
+    @Test
+    func sequenceStartsWith() throws {
         let predicate = #Predicate<Person> { $0.firstName.starts(with: "J") }
 
         let compoundPred = [.true, predicate].conjunction()
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared)) {
-            """
-            [
-              {
-                "expression" : [
-                  true,
-                  [
-                    {
-                      "identifier" : "Person.firstName",
-                      "root" : {
-                        "key" : 17
-                      }
-                    },
-                    "J"
-                  ]
-                ],
-                "structure" : {
-                  "args" : [
-                    {
-                      "args" : [
-                        "Swift.Bool"
-                      ],
-                      "identifier" : "PredicateExpressions.Value"
-                    },
-                    {
-                      "args" : [
-                        {
-                          "args" : [
-                            {
-                              "args" : [
-                                "Foundation.Predicate.Input.0"
-                              ],
-                              "identifier" : "PredicateExpressions.Variable"
-                            },
-                            "Swift.String"
-                          ],
-                          "identifier" : "PredicateExpressions.KeyPath"
-                        },
-                        {
-                          "args" : [
-                            "Swift.String"
-                          ],
-                          "identifier" : "PredicateExpressions.Value"
-                        }
-                      ],
-                      "identifier" : "PredicateExpressions.SequenceStartsWith"
-                    }
-                  ],
-                  "identifier" : "PredicateExpressions.Conjunction"
-                },
-                "variable" : [
-                  {
-                    "key" : 17
-                  }
-                ]
-              }
-            ]
-            """
+        try compoundPred.testFetch()
+    }
+
+    //    @Test
+    //    func template() throws {
+    //        let predicate = #Predicate<Person> { $0.firstName == "" }
+    //
+    //        let compoundPred = [.true, predicate].conjunction()
+    //
+    //        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared))
+    //
+    //        try compoundPred.testFetch()
+    //    }
+}
+
+
+@dynamicMemberLookup
+struct Unknown {
+    private let value: Any?
+
+    public init(_ value: Any?) {
+        self.value = value
+    }
+
+    subscript(dynamicMember key: String) -> Self {
+        guard let dict = value as? [String:Any] else {
+            return Unknown(nil)
         }
 
-        XCTAssertNoThrow(try compoundPred.testFetch())
+        return Unknown(dict[key])
     }
 
-    
-//    func test2() throws {
-//        let predicate = #Predicate<Person> { $0.firstName.reversed().starts(with: "J") }
-//
-//        let compoundPred = [.true, predicate].conjunction()
-//
-//        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared))
-//
-//        XCTAssertNoThrow(try compoundPred.testFetch())
-//    }
+    subscript(_ index: Int) -> Self {
+        guard let array = value as? [Any] else {
+            return Unknown(nil)
+        }
 
-    func template() throws {
-        let predicate = #Predicate<Person> { $0.firstName == "" }
+        guard array.startIndex <= index, index < array.endIndex else {
+            return Unknown(nil)
+        }
 
-        let compoundPred = [.true, predicate].conjunction()
+        return Unknown(array[index])
+    }
 
-        assertInlineSnapshot(of: compoundPred, as: .json(with: .shared))
-
-        XCTAssertNoThrow(try compoundPred.testFetch())
+    func `as`<T>(_ type: T.Type = T.self) -> T? {
+        value as? T
     }
 }
+
+extension Predicate {
+    func variableID() throws -> Int? {
+        let data = try JSONEncoder().encode(self, configuration: .shared)
+        let json = try JSONSerialization.jsonObject(with: data)
+
+        return Unknown(json)
+            .variable[0]
+            .key
+            .as(Int.self)
+    }
+
+    func recursiveVariables() throws -> Set<Int> {
+        let data = try JSONEncoder().encode(self, configuration: .shared)
+        let json = try JSONSerialization.jsonObject(with: data)
+
+        return walkObject(json)
+    }
+
+    private func walkObject(_ json: Any) -> Set<Int> {
+        var ids = Set<Int>()
+
+        if let dict = json as? [String:Any] {
+            for (key, value) in dict {
+                if key == "key", let value = value as? Int {
+                    ids.insert(value)
+                }
+
+                ids.formUnion(walkObject(value))
+            }
+        } else if let array = json as? [Any] {
+            for value in array {
+                ids.formUnion(walkObject(value))
+            }
+        }
+
+        return ids
+    }
+}
+

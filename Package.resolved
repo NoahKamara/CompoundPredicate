@@ -1,13 +1,22 @@
 {
-  "originHash" : "7f25f611db878e8295ae1df436f9c4050d85e830c2ec205d2b6d7c7120fde3c2",
+  "originHash" : "95a14b452179c404a3c0b0bfb84c18c7eb6d86b2c3d2444b4b8957a47b3a34e3",
   "pins" : [
     {
-      "identity" : "swift-snapshot-testing",
+      "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-snapshot-testing.git",
+      "location" : "https://github.com/apple/swift-docc-plugin",
       "state" : {
-        "revision" : "e7b77228b34057041374ebef00c0fd7739d71a2b",
-        "version" : "1.15.3"
+        "revision" : "26ac5758409154cc448d7ab82389c520fa8a8247",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
+        "version" : "1.0.0"
       }
     },
     {
@@ -17,6 +26,24 @@
       "state" : {
         "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
         "version" : "509.1.1"
+      }
+    },
+    {
+      "identity" : "swift-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-testing.git",
+      "state" : {
+        "revision" : "3ed2f90058afe4437369aee4880890e7fa65d1ec",
+        "version" : "0.5.1"
+      }
+    },
+    {
+      "identity" : "swift-xctesting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/noahkamara/swift-xctesting",
+      "state" : {
+        "branch" : "main",
+        "revision" : "cc7414718464f58d3391195afeb4d48fb98d8818"
       }
     }
   ],

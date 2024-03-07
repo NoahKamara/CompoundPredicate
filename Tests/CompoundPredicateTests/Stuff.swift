@@ -1,7 +1,6 @@
 import XCTest
 @testable import CompoundPredicate
 import SwiftData
-import InlineSnapshotTesting
 
 enum JSONKey: Hashable {
     case index(Int)

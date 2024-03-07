@@ -26,8 +26,9 @@ extension Predicate {
     ) -> Predicate<T> {
         return Predicate<T>({ variable in
             let expressions = predicates.map({
-                $0.replace(with: variable)
+                $0.expression.replacingVariable($0.variable, with: variable)
             })
+
             guard let first = expressions.first else {
                 return PredicateExpressions.Value(true)
             }
@@ -43,7 +44,22 @@ extension Predicate {
 
 
 public extension Array {
-    /// Joins multiple predicates with an ``PredicateExpressions.Conjunction``
+    /// Joins multiple predicates with an `Conjunction`
+    ///
+    /// ```swift
+    /// var filters = [Predicate<Book>]()
+    ///
+    /// filters.append(#Predicate<Book> {
+    ///     $0.pages > 50
+    /// })
+    ///
+    /// filters.append(#Predicate<Book> {
+    ///     $0.pages <= 200
+    /// })
+    ///
+    /// let priceFilter = filters.conjunction()
+    /// ```
+    ///
     /// - Returns: A predicate evaluating to true if **all** sub-predicates evaluate to true
     func conjunction<T>() -> Predicate<T> where Element == Predicate<T> {
         func buildConjunction(lhs: some StandardPredicateExpression<Bool>, rhs: some StandardPredicateExpression<Bool>) -> any StandardPredicateExpression<Bool> {
@@ -55,7 +71,23 @@ public extension Array {
         })
     }
 
-    /// Joins multiple predicates with an ``PredicateExpressions.Disjunction``
+
+    /// Joins multiple predicates with an `Disjunction`
+    ///
+    /// ```swift
+    /// var filters = [Predicate<Book>]()
+    ///
+    /// filters.append(#Predicate<Book> {
+    ///     $0.authors.contains("Aristoteles")
+    /// })
+    ///
+    /// filters.append(#Predicate<ShoppingItem> {
+    ///     $0.authors.contains("Sokrates")
+    /// })
+    ///
+    /// let priceFilter = filters.disjunction()
+    /// ```
+    ///
     /// - Returns: A predicate evaluating to true if **any** sub-predicate evaluates to true
     func disjunction<T>() -> Predicate<T> where Element == Predicate<T> {
         func buildConjunction(lhs: some StandardPredicateExpression<Bool>, rhs: some StandardPredicateExpression<Bool>) -> any StandardPredicateExpression<Bool> {
