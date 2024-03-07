@@ -44,7 +44,8 @@ final class Person: PredicateCodableKeyPathProviding {
         "Person.firstName": \.firstName,
         "Person.lastName": \.lastName,
         "Person.age": \.age,
-        "Person.isStarred": \.isStarred
+        "Person.isStarred": \.isStarred,
+        "Person.rating": \.rating
     ]
 
     let firstName: String
@@ -52,6 +53,8 @@ final class Person: PredicateCodableKeyPathProviding {
 
     let age: Int
     let isStarred: Bool
+
+    var rating: Float = 0
 
     init(firstName: String, lastName: String, age: Int, isStarred: Bool) {
         self.firstName = firstName

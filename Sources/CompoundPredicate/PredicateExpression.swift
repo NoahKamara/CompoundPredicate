@@ -23,6 +23,7 @@ extension PredicateExpression {
         if let replacingExpr = self as? any VariableReplacing<Output> {
             return replacingExpr.replacing(variable, with: replacement) as! Self
         } else {
+            debugPrint("Unsupported Predicate \(Self.self)")
             return self
         }
     }
