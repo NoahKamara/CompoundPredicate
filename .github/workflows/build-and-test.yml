@@ -1,0 +1,36 @@
+name: Build & Test
+
+concurrency:
+  group: "quality"
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+      - release
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - release
+jobs:
+  build:
+    name: Build & Test
+    runs-on: macos-latest
+    steps:
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v1.26.0
+        with:
+          swift-version: 5.9
+          
+      - name: Get swift version
+        run: swift --version
+      
+      - uses: actions/checkout@v4
+      
+      - name: Build
+        run: swift build
+        
+      - name: Run tests
+        run: swift test
