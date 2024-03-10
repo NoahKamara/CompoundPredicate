@@ -28,13 +28,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4 # PR for Swift 5.10
-      - uses: fwcd/swift-docc-action@v1
-        with:
-          target: CompoundPredicate
-          output: ./Documentation.doccarchive
-          hosting-base-path: /CompoundPredicate
-          disable-indexing: 'true'
-          transform-for-static-hosting: 'true'
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
