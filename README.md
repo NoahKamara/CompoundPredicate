@@ -1,3 +1,5 @@
+[![Build & Test](https://github.com/NoahKamara/CompoundPredicate/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/NoahKamara/CompoundPredicate/actions/workflows/build-and-test.yml)
+
 # CompoundPredicate
 
 CompoundPredicate aims to improve the Predicate system to enable combining multiple predicates after constructing them:
