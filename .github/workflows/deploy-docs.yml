@@ -35,7 +35,7 @@ jobs:
           hosting-base-path: yourproject
           disable-indexing: 'true'
           transform-for-static-hosting: 'true'
-          hosting-base-path "/CompoundPredicate"
+          hosting-base-path: "/CompoundPredicate"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
