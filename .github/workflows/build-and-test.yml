@@ -18,6 +18,10 @@ jobs:
   build:
     name: Build & Test
     runs-on: macos-latest
+    strategy:
+      matrix:
+        scheme:
+          - "CompoundPredicate"
     steps:
       - name: Install Swift
         uses: swift-actions/setup-swift@v1.26.0
@@ -28,7 +32,21 @@ jobs:
         run: swift --version
       
       - uses: actions/checkout@v4
-      
+
+      - name: Cache Dependencies
+        uses: actions/cache@v4.0.1
+        with:
+          path: .build
+          key: ${{ runner.os }}-${{ matrix.scheme }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.scheme }}-spm2-
+            
+      - name: Cache DerivedData
+        uses: actions/cache@v4.0.1
+        with:
+          path: "~/Library/Developer/Xcode/DerivedData"
+          key: ${{ runner.os }}-${{ matrix.scheme }}-deriveddata
+          
       - name: Build
         run: swift build
         
