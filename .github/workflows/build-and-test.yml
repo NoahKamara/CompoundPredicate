@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Install Swift
         # uses: swift-actions/setup-swift@???
-        uses: marcprux/setup-swift@v691b6b72e1477342a320edc7df795783d11abc36
+        uses: marcprux/setup-swift@691b6b72e1477342a320edc7df795783d11abc36
         with:
           swift-version: 5.10.0
           
