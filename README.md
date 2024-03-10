@@ -25,6 +25,8 @@ let titleFilter = #Predicate<Book> {
 let filter = [lengthFilter, titleFilter].disjunction()
 ```
 
+## Documentation
+The documentation is available [here](https://noahkamara.github.io/CompoundPredicate/documentation/compoundpredicate/) and as Docc archive you can view using Xcode
 
 ## Implementation Progress
 - [x] Arithmetic (+, -, *, /, %)
