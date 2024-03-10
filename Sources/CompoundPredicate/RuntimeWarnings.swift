@@ -2,8 +2,8 @@
 
 import Foundation
 
-extension Notification.Name {
-    public static let foundationExtensionsRuntimeWarning: Self = .init(
+public extension Notification.Name {
+    static let foundationExtensionsRuntimeWarning: Self = .init(
         rawValue: "FoundationExtensions.runtimeWarning"
     )
 }
@@ -11,7 +11,7 @@ extension Notification.Name {
 @_transparent
 @inlinable
 @inline(__always)
-public func runtimeWarn(
+func runtimeWarn(
     _ message: @autoclosure () -> String,
     category: String? = "FoundationExtensions",
     notificationName: Notification.Name? = .foundationExtensionsRuntimeWarning
