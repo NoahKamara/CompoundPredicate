@@ -1,4 +1,5 @@
 import XCTesting
+@testable import CompoundPredicate
 
 @XCTesting
 @Suite
@@ -76,5 +77,39 @@ struct BasicTests {
         let expectedString = try #require(String(data: expectedData, encoding: .utf8))
 
         #expect(predicateString == expectedString)
+    }
+
+    @Test
+    func nonConforming() async throws {
+        struct CustomPredicate: StandardPredicateExpression {
+            let variable: PredicateExpressions.Variable<Bool>
+
+            func evaluate(_ bindings: PredicateBindings) throws -> Bool {
+                try variable.evaluate(bindings)
+            }
+        }
+
+        let lhs = Predicate<Bool>({ CustomPredicate(variable: $0) })
+        let rhs = Predicate<Bool>({ CustomPredicate(variable: $0) })
+
+        await confirmation(expectedCount: 2) { confirm in
+            NotificationCenter.default.addObserver(
+                forName: .foundationExtensionsRuntimeWarning,
+                object: nil,
+                queue: .main
+            ) { notification in
+                let runtimeWarnMsg = try? #require(notification.userInfo?["message"] as? String)
+
+                guard let runtimeWarnMsg else { return }
+
+                #expect(runtimeWarnMsg.contains("\(CustomPredicate.self) is not a supported Predicate."))
+
+                print("CALLED")
+                confirm()
+            }
+            
+            XCTExpectFailure("Cannot combine unsupported Predicate", strict: true)
+            _ = [lhs, rhs].disjunction()
+        }
     }
 }

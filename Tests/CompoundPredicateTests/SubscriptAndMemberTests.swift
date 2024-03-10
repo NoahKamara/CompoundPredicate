@@ -1,15 +1,9 @@
 import XCTesting
-import CompoundPredicate
+@testable import CompoundPredicate
 
 @XCTesting
 @Suite
 struct SubscriptAndMemberTests {
-    func test() {
-        let pred = #Predicate<Person> {
-            $0.isStarred
-        }
-    }
-
     @Test
     func collectionSubscript() throws {
         let wrapped = PredicateExpressions.Variable<[Int]>()

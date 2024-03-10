@@ -1,5 +1,5 @@
 {
-  "originHash" : "95a14b452179c404a3c0b0bfb84c18c7eb6d86b2c3d2444b4b8957a47b3a34e3",
+  "originHash" : "b09afdfda25eb6a1cfa9584919efbb3ea94557a0433f5a4a3f4d1881cdc0a189",
   "pins" : [
     {
       "identity" : "swift-docc-plugin",
@@ -44,6 +44,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "cc7414718464f58d3391195afeb4d48fb98d8818"
+      }
+    },
+    {
+      "identity" : "xctest-dynamic-overlay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
+      "state" : {
+        "revision" : "b13b1d1a8e787a5ffc71ac19dcaf52183ab27ba2",
+        "version" : "1.1.1"
       }
     }
   ],
