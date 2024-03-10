@@ -27,13 +27,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@691b6b72e1477342a320edc7df795783d11abc36 # PR for Swift 5.10
+        uses: actions/checkout@v4 # PR for Swift 5.10
+      - uses: fwcd/swift-docc-action@v1
+        with:
+          target: CompoundPredicate
+          output: ./Documentation.doccarchive
+          hosting-base-path: yourproject
+          disable-indexing: 'true'
+          transform-for-static-hosting: 'true'
+          hosting-base-path "/CompoundPredicate"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
       - name: Upload Documentation Archive
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./Documentation.doccarchive/"
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
