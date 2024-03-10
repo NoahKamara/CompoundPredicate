@@ -24,7 +24,7 @@ jobs:
           - "CompoundPredicate"
     steps:
       - name: Install Swift
-        uses: swift-actions/setup-swift@v1.26.0
+        uses: swift-actions/setup-swift@v691b6b72e1477342a320edc7df795783d11abc36
         with:
           swift-version: 5.10.0
           
