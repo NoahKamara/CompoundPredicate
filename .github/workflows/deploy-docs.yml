@@ -32,10 +32,9 @@ jobs:
         with:
           target: CompoundPredicate
           output: ./Documentation.doccarchive
-          hosting-base-path: yourproject
+          hosting-base-path: /CompoundPredicate
           disable-indexing: 'true'
           transform-for-static-hosting: 'true'
-          hosting-base-path: "/CompoundPredicate"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
