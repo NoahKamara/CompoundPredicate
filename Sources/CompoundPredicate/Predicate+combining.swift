@@ -7,6 +7,27 @@
 
 import Foundation
 
+fileprivate extension StandardPredicateExpression<Bool> {
+    ///
+    /// > Only Expression conforming to ``CompoundPredicate/VariableReplacing`` will be recursed
+    ///
+    /// - Parameters:
+    ///   - variable: a variable that should be replaced
+    ///   - replacement: the variable it should be replaced with
+    /// - Returns:
+    func replacingVariable<T>(
+        _ variable: PredicateExpressions.Variable<T>,
+        with replacement: PredicateExpressions.Variable<T>
+    ) -> Self {
+        if let replacingExpr = self as? any VariableReplacing<Output> {
+            return replacingExpr.replacing(variable, with: replacement) as! Self
+        } else {
+            debugPrint("Unsupported Predicate \(Self.self)")
+            return self
+        }
+    }
+}
+
 extension Predicate {
     typealias Expression = any StandardPredicateExpression<Bool>
 
