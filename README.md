@@ -28,6 +28,9 @@ let filter = [lengthFilter, titleFilter].disjunction()
 ## Documentation
 The documentation is available [here](https://noahkamara.github.io/CompoundPredicate/documentation/compoundpredicate/) and as Docc archive you can view using Xcode
 
+## Feedback
+Please feel free to create an [Issue](https://github.com/NoahKamara/CompoundPredicate/issues), or even better contribute actively by creating a [pull request](https://github.com/NoahKamara/CompoundPredicate/pulls)
+
 ## Implementation Progress
 - [x] Arithmetic (+, -, *, /, %)
     - [x] `+`, `-`, `*` `PredicateExpressions.Arithmetic`
