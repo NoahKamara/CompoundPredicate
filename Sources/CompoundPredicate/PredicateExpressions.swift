@@ -166,23 +166,29 @@ extension PredicateExpressions.Negation: VariableReplacing where Wrapped: Variab
 
 
 // MARK: Swift optionals (?, ??, !, flatMap(_:), if-let expressions)
-//extension PredicateExpressions.OptionalFlatMap: VariableReplacing where LHS: VariableReplacing, RHS: VariableReplacing, Wrapped: VariableReplacing, Result: VariableReplacing {
-//    public func replacing<T>(_ variable: Variable<T>, with replacement: Variable<T>) -> PredicateExpressions.OptionalFlatMap<LHS, Wrapped, RHS, Result> {
-//        
-//        PredicateExpressions.OptionalFlatMap(
-//            wrapped.replacing(variable, with: replacement),
-//            { _ in self.transform }
-//        )
-////        Self(wrapped.replacing(variable, with: replacement)) { wrappedVar in
-////            self.transform.replacing(self.variable, with: wrappedVar)
-////        }
-////        Self(self.) { innerVar in
-////            self.transform
-////                .replacing(self.variable, with: innerVar)
-////                .replacing(variable, with: replacement)
-////        }
-//    }
-//}
+extension PredicateExpressions.OptionalFlatMap: VariableReplacing where LHS: VariableReplacing, RHS: VariableReplacing, RHS.Output == Result {
+    public func replacing<T>(_ variable: Variable<T>, with replacement: Variable<T>) -> Self {
+        if RHS.Output.self == Result.self {
+            PredicateExpressions.OptionalFlatMap<LHS, Wrapped, RHS, Result>.init(
+                wrapped.replacing(variable, with: replacement)
+            ) { innerVar in
+                self.transform
+                    .replacing(self.variable, with: innerVar)
+                    .replacing(variable, with: replacement)
+            }
+        } else if RHS.Output.self == Result?.self {
+            PredicateExpressions.OptionalFlatMap<LHS, Wrapped, RHS, Result>.init(
+                wrapped.replacing(variable, with: replacement)
+            ) { innerVar in
+                self.transform
+                    .replacing(self.variable, with: innerVar)
+                    .replacing(variable, with: replacement)
+            }
+        } else {
+            self
+        }
+    }
+}
 
 extension PredicateExpressions.NilCoalesce: VariableReplacing where LHS: VariableReplacing, RHS: VariableReplacing {
     public func replacing<T>(_ variable: Variable<T>, with replacement: Variable<T>) -> Self {

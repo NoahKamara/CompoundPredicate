@@ -4,26 +4,26 @@ import CompoundPredicate
 @XCTesting
 @Suite
 struct OptionalTests {
-    @Test(.disabled("Not Implemented"))
+    @Test
     func flatMap() throws {
-//        let wrapped = PredicateExpressions.Variable<Bool?>()
-//        let rhs = PredicateExpressions.Variable<Bool>()
-//
-//
-//        let expression = PredicateExpressions.build_flatMap(wrapped) { variable in
-//            PredicateExpressions.Equal(lhs: variable, rhs: rhs)
-//        }
-//
-//        let replacement = PredicateExpressions.Variable<Bool>()
-//        let optReplacement = PredicateExpressions.Variable<Bool?>()
-//
-//        // Replace Wrapped
-//        let wrappedReplaced = expression.replacing(wrapped, with: optReplacement)
-//        #expect(wrappedReplaced.rhs == optReplacement)
-//
-//        // Replace Transform
-//        let transformReplaced = wrappedReplaced.replacing(rhs, with: replacement)
-//        #expect(transformReplaced. == replacement)
+        let wrapped = PredicateExpressions.Variable<Bool?>()
+        let rhs = PredicateExpressions.Variable<Bool>()
+
+
+        let expression = PredicateExpressions.build_flatMap(wrapped) { variable in
+            rhs
+        }
+
+        let wrappedReplacement = PredicateExpressions.Variable<Bool?>()
+        let rhsReplacement = PredicateExpressions.Variable<Bool>()
+
+        // Replace Wrapped
+        let wrappedReplaced = expression.replacing(wrapped, with: wrappedReplacement)
+        #expect(wrappedReplaced.wrapped == wrappedReplacement)
+
+        // Replace Transform
+        let transformReplaced = wrappedReplaced.replacing(rhs, with: rhsReplacement)
+        #expect(transformReplaced.transform == rhsReplacement)
     }
 
     @Test

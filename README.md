@@ -54,8 +54,8 @@ The documentation is available [here](https://noahkamara.github.io/CompoundPredi
     - [x] `||` `PredicateExpressions.Disjunction`
     - [x] `!`  `PredicateExpressions.Negation`
 
-- [ ] Swift optionals (?, ??, !, flatMap(_:), if-let expressions)
-    - [ ] `?`, `flatMap(_:)` `PredicateExpressions.OptionalFlatMap`
+- [x] Swift optionals (?, ??, !, flatMap(_:), if-let expressions)
+    - [x] `?`, `flatMap(_:)` `PredicateExpressions.OptionalFlatMap`
     - [x] `??`, `if-let` `PredicateExpressions.NilCoalesce`
 
 - [x] Types (as, as?, as!, is)
