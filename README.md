@@ -1,5 +1,21 @@
 [![Build & Test](https://github.com/NoahKamara/CompoundPredicate/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/NoahKamara/CompoundPredicate/actions/workflows/build-and-test.yml)
 
+## For Developers targeting macOS 14.4 / iOS 17.4 or later:
+
+This [PR](https://github.com/apple/swift-foundation/pull/343) For Swift Foundation adds compound functionality to Predicates like so:
+If you are targeting only those versions and above you should use this instead:
+
+```swift
+let notTooShort = #Predicate<Book> { $0.pages > 50 }
+let notTooLong = #Predicate<Book> { $0.pages <= 350 }
+let titleFilter = #Predicate<Book> { $0.title.contains("Swift") }
+
+let filter = #Predicate<Book> {
+    (notTooShort.evaluate($0) && notTooLong.evaluate($0)) || titleFilter.evaluate($0)
+}
+```
+
+
 # CompoundPredicate
 
 CompoundPredicate aims to improve the Predicate system to enable combining multiple predicates after constructing them:
