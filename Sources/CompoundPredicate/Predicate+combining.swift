@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IssueReporting
 
 fileprivate extension StandardPredicateExpression<Bool> {
     ///
@@ -22,7 +23,7 @@ fileprivate extension StandardPredicateExpression<Bool> {
         if let replacingExpr = self as? any VariableReplacing<Output> {
             return replacingExpr.replacing(variable, with: replacement) as! Self
         } else {
-            runtimeWarn("""
+            reportIssue("""
             \(Self.self) is not a supported Predicate. 
 
             Check that this expression and any child-expressions conform to `VariableReplacing`

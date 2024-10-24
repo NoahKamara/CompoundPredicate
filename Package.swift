@@ -22,21 +22,18 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/noahkamara/swift-xctesting", branch: "main"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0"),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.1.1") 
+        .package(url: "https://github.com/pointfreeco/swift-issue-reporting", from: "1.2.2")
     ],
     targets: [
         .target(
             name: "CompoundPredicate",
             dependencies: [
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+                .product(name: "IssueReporting", package: "swift-issue-reporting")
             ]
         ),
         .testTarget(
             name: "CompoundPredicateTests",
-            dependencies: [
-                "CompoundPredicate",
-                .product(name: "XCTesting", package: "swift-xctesting")
-            ]
+            dependencies: ["CompoundPredicate"]
 //            linkerSettings: [
 //                .unsafeFlags([
 //                    "-Xlinker", "-sectcreate",
