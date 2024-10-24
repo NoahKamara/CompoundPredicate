@@ -1,8 +1,8 @@
 import Foundation
 
 // MARK: Person
-struct Person: PredicateCodableKeyPathProviding {
-    static var predicateCodableKeyPaths: [String : PartialKeyPath<Person>] = [
+struct Person: Sendable, PredicateCodableKeyPathProviding {
+    static var predicateCodableKeyPaths: [String : any PartialKeyPath<Person> & Sendable] = [
         "Person.name": \.name,
         "Person.age": \.age,
         "Person.isStarred": \.isStarred,
@@ -148,3 +148,12 @@ fileprivate struct Unknown: CustomStringConvertible {
     }
 }
 
+
+
+
+
+extension PredicateExpressions.Variable: @retroactive Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.key == rhs.key
+    }
+}

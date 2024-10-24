@@ -1,7 +1,7 @@
-import XCTesting
+import Testing
 @testable import CompoundPredicate
+import Foundation
 
-@XCTesting
 @Suite
 struct SubscriptAndMemberTests {
     @Test

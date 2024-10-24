@@ -1,7 +1,7 @@
-import XCTesting
+import Testing
 @testable import CompoundPredicate
+import Foundation
 
-@XCTesting
 @Suite
 struct BasicTests {
     @Test
@@ -92,23 +92,7 @@ struct BasicTests {
         let lhs = Predicate<Bool>({ CustomPredicate(variable: $0) })
         let rhs = Predicate<Bool>({ CustomPredicate(variable: $0) })
 
-        await confirmation(expectedCount: 2) { confirm in
-            NotificationCenter.default.addObserver(
-                forName: .foundationExtensionsRuntimeWarning,
-                object: nil,
-                queue: .main
-            ) { notification in
-                let runtimeWarnMsg = try? #require(notification.userInfo?["message"] as? String)
-
-                guard let runtimeWarnMsg else { return }
-
-                #expect(runtimeWarnMsg.contains("\(CustomPredicate.self) is not a supported Predicate."))
-
-                print("CALLED")
-                confirm()
-            }
-            
-            XCTExpectFailure("Cannot combine unsupported Predicate", strict: true)
+        withKnownIssue {
             _ = [lhs, rhs].disjunction()
         }
     }

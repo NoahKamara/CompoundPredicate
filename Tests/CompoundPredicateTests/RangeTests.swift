@@ -1,7 +1,6 @@
-import XCTesting
+import Testing
+import Foundation
 
-
-@XCTesting
 @Suite
 struct RangeTests {
     @Test

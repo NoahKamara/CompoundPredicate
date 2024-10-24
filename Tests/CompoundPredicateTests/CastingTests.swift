@@ -1,7 +1,7 @@
-import XCTesting
+import Testing
 import CompoundPredicate
+import Foundation
 
-@XCTesting
 @Suite
 struct CastingTests {
     @Test

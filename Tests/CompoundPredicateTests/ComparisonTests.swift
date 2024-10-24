@@ -1,7 +1,7 @@
-import XCTesting
+import Testing
+import Foundation
 
 
-@XCTesting
 @Suite
 struct ComparisonTests {
     @Test(arguments: [PredicateExpressions.ComparisonOperator.greaterThan, .greaterThanOrEqual, .lessThan, .lessThanOrEqual])

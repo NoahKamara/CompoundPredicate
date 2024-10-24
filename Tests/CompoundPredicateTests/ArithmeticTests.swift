@@ -1,7 +1,6 @@
-import XCTesting
+import Testing
+import Foundation
 
-
-@XCTesting
 @Suite
 /// Tests for Arithmetic (+, -, \*, /, %) and Unary Minus (-) Operators
 struct ArithmeticTests {
@@ -118,8 +117,8 @@ struct ArithmeticTests {
     }
 }
 
-extension PredicateExpressions.Variable: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.key == rhs.key
-    }
-}
+//extension PredicateExpressions.Variable: Equatable {
+//    public static func == (lhs: Self, rhs: Self) -> Bool {
+//        lhs.key == rhs.key
+//    }
+//}
